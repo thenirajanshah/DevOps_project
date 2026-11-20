@@ -1,0 +1,23 @@
+- name: Set up the app server
+  hosts: local
+  become: true
+  tasks:
+    - name: Install useful packages
+      apt:
+        name:
+          - curl
+          - git
+          - tree
+        state: present
+        update_cache: true
+
+    - name: Create the app folder
+      file:
+        path: /opt/myapp
+        state: directory
+        mode: "0755"
+
+    - name: Add a deploy note
+      copy:
+        dest: /opt/myapp/README.txt
+        content: "Configured by Ansible\n"
